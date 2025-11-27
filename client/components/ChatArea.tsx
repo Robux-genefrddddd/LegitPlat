@@ -423,19 +423,19 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
             <PopoverTrigger asChild>
               <button
                 id="emoji-btn"
-                className="p-1.5 text-muted-foreground hover:text-foreground transition-all duration-200 hover:bg-secondary rounded-lg"
+                className="p-2 text-white/50 hover:text-white/80 transition-all duration-200 hover:bg-white/10 rounded-lg"
                 aria-label="Ajouter un emoji"
               >
-                <Smile size={18} />
+                <Smile size={20} />
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-64 p-3 bg-card border border-border rounded-lg shadow-md">
+            <PopoverContent className="w-64 p-3 bg-card border border-white/20 rounded-2xl shadow-xl">
               <div className="grid grid-cols-5 gap-2">
                 {EMOJIS.map((emoji) => (
                   <button
                     key={emoji}
                     onClick={() => addEmoji(emoji)}
-                    className="p-2 hover:bg-secondary rounded-lg transition-all duration-200 text-lg hover:scale-110 transform"
+                    className="p-2 hover:bg-white/10 rounded-lg transition-all duration-200 text-xl hover:scale-125 transform"
                   >
                     {emoji}
                   </button>
@@ -448,13 +448,13 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
           <button
             onClick={handleSend}
             disabled={loading || !message.trim()}
-            className="p-1.5 text-muted-foreground hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 hover:bg-secondary rounded-lg flex items-center justify-center transform disabled:hover:scale-100"
+            className="p-2.5 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 hover:bg-gradient-to-r hover:from-orange-600/40 hover:to-orange-500/30 rounded-lg flex items-center justify-center hover:scale-110 transform disabled:hover:scale-100"
             aria-label="Envoyer le message"
           >
             {loading ? (
-              <Loader2 size={18} className="animate-spin" />
+              <Loader2 size={20} className="animate-spin" />
             ) : (
-              <Send size={18} />
+              <Send size={20} />
             )}
           </button>
         </div>
