@@ -256,7 +256,7 @@ export function SettingsModal({ isOpen, onOpenChange }: SettingsModalProps) {
 
           <button
             onClick={handleLogout}
-            className="w-full px-4 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 hover:border-red-500/50 font-medium text-sm rounded-[12px] transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-sm"
+            className="w-full px-4 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 hover:border-red-500/50 font-medium text-sm rounded-[10px] transition-all duration-300 flex items-center justify-center gap-2 hover:shadow-sm"
           >
             <LogOut size={16} />
             <span>Se déconnecter</span>
