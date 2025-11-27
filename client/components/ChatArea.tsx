@@ -4,7 +4,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { MessagesService, Message } from "@/lib/messages";
 import { AIService } from "@/lib/ai";
 import { toast } from "sonner";
-import { TypewriterText } from "@/components/TypewriterText";
 import { MessageRenderer } from "@/components/MessageRenderer";
 import { ThinkingAnimation } from "@/components/ThinkingAnimation";
 import {
@@ -22,7 +21,7 @@ const EMOJIS = [
   "🤔",
   "😢",
   "😡",
-  "🎉",
+  "���",
   "🔥",
   "👍",
   "❤️",
