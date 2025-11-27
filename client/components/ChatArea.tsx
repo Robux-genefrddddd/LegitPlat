@@ -709,73 +709,65 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
 
       {/* Message Input Area - Fixed at Bottom */}
       <div
-        className="w-full px-6 md:px-8 py-6 animate-slideUp border-t transition-colors duration-300"
+        className="w-full px-6 md:px-8 py-5 transition-colors duration-300"
         style={{
-          borderColor: isDark
-            ? "rgba(255, 255, 255, 0.08)"
-            : "rgba(0, 0, 0, 0.08)",
           backgroundColor: isDark ? "#0e0e0e" : "#F3F4F6",
+          animation: "fadeIn 200ms ease-out",
         }}
       >
         <div className="flex flex-col items-center w-full">
           <div className="w-full max-w-2xl">
             <div
-              className={`flex items-end gap-2 px-4 py-3 transition-all duration-300 group shadow-sm rounded-4xl ${
+              className={`flex items-center gap-3 px-4 transition-all duration-300 group ${
                 !conversationId
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:shadow-md focus-within:shadow-md"
+                  : "hover:shadow-lg focus-within:shadow-lg"
               }`}
               style={{
                 backgroundColor: isDark ? "#111" : "#FFFFFF",
                 border: isDark
                   ? "1px solid rgba(255, 255, 255, 0.08)"
-                  : "1px solid rgba(0, 0, 0, 0.08)",
+                  : "1px solid rgba(0, 0, 0, 0.10)",
+                borderRadius: "16px",
+                height: "56px",
+                boxShadow: isDark
+                  ? "0 2px 12px rgba(0, 0, 0, 0.25)"
+                  : "0 1px 6px rgba(0, 0, 0, 0.08)",
+                animation: "messageInputSlideUp 180ms cubic-bezier(0.34, 1.56, 0.64, 1) 0ms both",
               }}
             >
-              <textarea
-                ref={textareaRef}
-                id="message-input"
-                value={message}
-                onChange={(e) => {
-                  setMessage(e.target.value);
-                  handleTextareaAutoResize();
-                }}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                disabled={!conversationId || loading}
-                placeholder={
-                  conversationId
-                    ? "Votre message..."
-                    : "Sélectionnez une conversation..."
-                }
-                className={`flex-1 bg-transparent focus:outline-none text-sm leading-[1.55] disabled:opacity-50 transition-colors resize-none max-h-48 ${
-                  isDark
-                    ? "text-white placeholder-white/50"
-                    : "text-[#1A1A1A] placeholder-[#3F3F3F]/50"
-                }`}
-                style={{
-                  height: `${AUTO_RESIZE_CONFIG.minHeight}px`,
-                  overflow: "hidden",
-                }}
-              />
-
-              {/* Emoji Picker */}
+              {/* Emoji Picker Button */}
               <Popover open={emojiOpen} onOpenChange={setEmojiOpen}>
                 <PopoverTrigger asChild>
                   <button
                     id="emoji-btn"
-                    className={`p-2 transition-all duration-200 rounded-lg flex-shrink-0 ${
-                      isDark
-                        ? "text-white/40 hover:text-white/70"
-                        : "text-[#3F3F3F]/40 hover:text-[#3F3F3F]/70"
-                    }`}
+                    className="flex-shrink-0 flex items-center justify-center transition-all duration-120 cursor-pointer"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      borderRadius: "50%",
+                      backgroundColor: isDark
+                        ? "rgba(255, 255, 255, 0.06)"
+                        : "rgba(0, 0, 0, 0.05)",
+                      color: isDark ? "#FFFFFF" : "#000000",
+                      opacity: isDark ? 0.6 : 0.5,
+                      border: "none",
+                    }}
+                    onMouseEnter={(e) => {
+                      const target = e.currentTarget as HTMLButtonElement;
+                      target.style.backgroundColor = isDark
+                        ? "rgba(255, 255, 255, 0.12)"
+                        : "rgba(0, 0, 0, 0.09)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const target = e.currentTarget as HTMLButtonElement;
+                      target.style.backgroundColor = isDark
+                        ? "rgba(255, 255, 255, 0.06)"
+                        : "rgba(0, 0, 0, 0.05)";
+                    }}
                     aria-label="Ajouter un emoji"
                   >
-                    <Smile size={18} />
+                    <Smile size={20} strokeWidth={1.5} />
                   </button>
                 </PopoverTrigger>
                 <PopoverContent
@@ -801,28 +793,89 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
                 </PopoverContent>
               </Popover>
 
+              {/* Textarea */}
+              <textarea
+                ref={textareaRef}
+                id="message-input"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  handleTextareaAutoResize();
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                disabled={!conversationId || loading}
+                placeholder={
+                  conversationId
+                    ? "Votre message..."
+                    : "Sélectionnez une conversation..."
+                }
+                className="flex-1 bg-transparent focus:outline-none disabled:opacity-50 transition-colors resize-none"
+                style={{
+                  fontSize: "15.5px",
+                  lineHeight: "1.45",
+                  color: isDark ? "#FFFFFF" : "#1A1A1A",
+                  backgroundColor: "transparent",
+                  border: "none",
+                  outline: "none",
+                  fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                  padding: "0",
+                  margin: "0",
+                  height: `${AUTO_RESIZE_CONFIG.minHeight}px`,
+                  overflow: "hidden",
+                  maxHeight: "calc(15.5px * 1.45 * 5)",
+                }}
+                placeholder={
+                  conversationId
+                    ? "Votre message..."
+                    : "Sélectionnez une conversation..."
+                }
+              />
+
               {/* Send Button */}
               <button
                 onClick={handleSend}
                 disabled={loading || !message.trim()}
-                className={`p-2 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 rounded-lg flex items-center justify-center flex-shrink-0 hover:scale-110 active:scale-95 ${
-                  isDark
-                    ? "text-white/40 hover:text-white"
-                    : "text-[#3F3F3F]/40 hover:text-[#3F3F3F]"
-                }`}
+                className="flex-shrink-0 flex items-center justify-center transition-all duration-200 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed active:scale-90"
                 style={{
-                  color: !message.trim()
+                  width: "34px",
+                  height: "34px",
+                  borderRadius: "50%",
+                  border: "none",
+                  backgroundColor: message.trim()
                     ? isDark
-                      ? "rgba(255, 255, 255, 0.3)"
-                      : "rgba(63, 63, 63, 0.3)"
-                    : "#3b82f6",
+                      ? "rgba(59, 130, 246, 0.1)"
+                      : "rgba(59, 130, 246, 0.08)"
+                    : "transparent",
+                  color: message.trim() ? "#3b82f6" : isDark ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.2)",
+                  cursor: message.trim() ? "pointer" : "default",
+                }}
+                onMouseEnter={(e) => {
+                  const target = e.currentTarget as HTMLButtonElement;
+                  if (message.trim()) {
+                    target.style.backgroundColor = isDark
+                      ? "rgba(59, 130, 246, 0.15)"
+                      : "rgba(59, 130, 246, 0.12)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.currentTarget as HTMLButtonElement;
+                  if (message.trim()) {
+                    target.style.backgroundColor = isDark
+                      ? "rgba(59, 130, 246, 0.1)"
+                      : "rgba(59, 130, 246, 0.08)";
+                  }
                 }}
                 aria-label="Envoyer le message"
               >
                 {loading ? (
-                  <Loader2 size={18} className="animate-spin" />
+                  <Loader2 size={18} className="animate-spin" strokeWidth={2} />
                 ) : (
-                  <Send size={18} />
+                  <Send size={18} strokeWidth={2} />
                 )}
               </button>
             </div>
