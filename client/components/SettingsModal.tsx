@@ -174,21 +174,13 @@ export function SettingsModal({ isOpen, onOpenChange }: SettingsModalProps) {
               className="animate-fadeIn"
               style={{ animationDelay: "0.15s" }}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/60 to-primary/80 flex items-center justify-center flex-shrink-0">
-                  <Moon size={16} className="text-primary-foreground" />
-                </div>
-                <h3 className="text-sm font-semibold text-foreground">
-                  Apparence
-                </h3>
-              </div>
-              <div className="bg-white/[0.02] border border-white/[0.08] rounded-[14px] p-4 flex items-center justify-between">
+              <h3 className="text-xs font-semibold text-foreground/80 uppercase tracking-wider mb-3">
+                Apparence
+              </h3>
+              <div className="bg-white/[0.03] rounded-[10px] p-3.5 flex items-center justify-between shadow-sm">
                 <div>
                   <p className="text-sm font-medium text-foreground">
                     Mode sombre
-                  </p>
-                  <p className="text-xs text-foreground/50 mt-0.5">
-                    Interface sombre premium
                   </p>
                 </div>
                 
