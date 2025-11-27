@@ -140,6 +140,50 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
     ) as unknown as NodeJS.Timeout;
   };
 
+  const startBlockRendering = (fullText: string) => {
+    if (typingIntervalRef.current) {
+      clearTimeout(typingIntervalRef.current);
+    }
+    if (blockIntervalRef.current) {
+      clearTimeout(blockIntervalRef.current);
+    }
+
+    setFullText(fullText);
+    const textBlocks = splitIntoBlocks(fullText);
+    setBlocks(textBlocks);
+    setRenderedBlockCount(0);
+    setIsRenderingBlocks(true);
+    setIsTyping(false);
+
+    let blockIndex = 0;
+
+    const renderNextBlock = () => {
+      if (blockIndex < textBlocks.length) {
+        setRenderedBlockCount(blockIndex + 1);
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+
+        const currentBlockLength = textBlocks[blockIndex].length;
+        const pauseDuration = getBlockPauseDuration(textBlocks[blockIndex]);
+
+        blockIndex++;
+
+        blockIntervalRef.current = setTimeout(
+          renderNextBlock,
+          pauseDuration,
+        ) as unknown as NodeJS.Timeout;
+      } else {
+        setIsRenderingBlocks(false);
+        blockIntervalRef.current = null;
+      }
+    };
+
+    // Start with first block immediately
+    blockIntervalRef.current = setTimeout(
+      renderNextBlock,
+      300,
+    ) as unknown as NodeJS.Timeout;
+  };
+
   useEffect(() => {
     if (conversationId && user?.uid) {
       loadMessages();
