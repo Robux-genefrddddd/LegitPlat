@@ -126,19 +126,19 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
       const content = headerMatch[2];
       const HeadingTag = `h${level}` as const;
       const headingClasses = {
-        h1: "text-3xl font-bold mb-4 mt-6 border-b pb-2",
-        h2: "text-2xl font-bold mb-3 mt-5 border-b pb-2",
-        h3: "text-xl font-bold mb-2 mt-4",
-        h4: "text-lg font-bold mb-2 mt-3",
-        h5: "text-base font-bold mb-2 mt-2",
-        h6: "text-sm font-bold mb-2 mt-2",
+        h1: "text-3xl font-bold mb-2 mt-1 border-b pb-2",
+        h2: "text-2xl font-bold mb-2 mt-1 border-b pb-2",
+        h3: "text-xl font-bold mb-1 mt-1",
+        h4: "text-lg font-bold mb-1 mt-1",
+        h5: "text-base font-bold mb-1 mt-1",
+        h6: "text-sm font-bold mb-1 mt-1",
       };
 
       const HeadingElement = HeadingTag;
       elements.push(
         <HeadingElement
           key={`h-${i}`}
-          className={`leading-[1.55] transition-all duration-300 ${
+          className={`leading-tight transition-all duration-300 ${
             isDark
               ? "text-white border-white/20"
               : "text-[#1A1A1A] border-black/[0.08]"
@@ -162,7 +162,7 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
       elements.push(
         <blockquote
           key={`quote-${i}`}
-          className={`border-l-4 border-orange-500 pl-4 py-2 my-3 italic rounded-r-lg leading-[1.55] transition-all duration-300 ${
+          className={`border-l-4 border-orange-500 pl-4 py-1.5 my-2 italic rounded-r-lg leading-tight transition-all duration-300 ${
             isDark ? "text-white/70" : "text-[#3F3F3F]/70"
           }`}
           style={{
@@ -200,14 +200,14 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
         elements.push(
           <ol
             key={`ol-${i}`}
-            className={`list-decimal list-inside mb-3 space-y-2 pl-2 transition-all duration-300 ${
+            className={`list-decimal list-inside mb-2 space-y-1 pl-2 transition-all duration-300 ${
               isDark ? "text-white/90" : "text-[#1A1A1A]/90"
             }`}
           >
             {listItems.map((item, idx) => (
               <li
                 key={idx}
-                className={`leading-[1.55] transition-all duration-300 ${
+                className={`leading-tight transition-all duration-300 ${
                   isDark ? "text-white/90" : "text-[#1A1A1A]/90"
                 }`}
               >
@@ -220,14 +220,14 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
         elements.push(
           <ul
             key={`ul-${i}`}
-            className={`list-disc list-inside mb-3 space-y-2 pl-2 transition-all duration-300 ${
+            className={`list-disc list-inside mb-2 space-y-1 pl-2 transition-all duration-300 ${
               isDark ? "text-white/90" : "text-[#1A1A1A]/90"
             }`}
           >
             {listItems.map((item, idx) => (
               <li
                 key={idx}
-                className={`leading-[1.55] transition-all duration-300 ${
+                className={`leading-tight transition-all duration-300 ${
                   isDark ? "text-white/90" : "text-[#1A1A1A]/90"
                 }`}
               >
@@ -245,9 +245,10 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
       elements.push(
         <p
           key={`p-${i}`}
-          className={`mb-3 leading-[1.55] transition-all duration-300 ${
+          className={`mb-2 leading-tight transition-all duration-300 ${
             isDark ? "text-white/90" : "text-[#1A1A1A]/90"
           }`}
+          style={{ margin: 0, marginBottom: "0.5rem" }}
         >
           {parseInlineMarkdown(trimmed, isDark)}
         </p>,
