@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Search, Image as ImageIcon, Smile, Send, Loader2 } from "lucide-react";
+import { Smile, Send, Loader2 } from "lucide-react";
 
 const EMOJIS = [
   "😀",
