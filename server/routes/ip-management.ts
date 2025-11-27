@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { adminDB } from "@/server/lib/firebase-admin";
-import { Timestamp, query, collection, where, getDocs } from "firebase-admin/firestore";
+import { getAdminDb } from "../lib/firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 
 export interface IPBan {
   id: string;
@@ -28,9 +28,11 @@ export const handleCheckIPBan: RequestHandler = async (req, res) => {
       return;
     }
 
-    const bansRef = collection(adminDB, "ip_bans");
-    const q = query(bansRef, where("ipAddress", "==", ipAddress));
-    const snapshot = await getDocs(q);
+    const db = getAdminDb();
+    const snapshot = await db
+      .collection("ip_bans")
+      .where("ipAddress", "==", ipAddress)
+      .get();
 
     if (snapshot.empty) {
       res.json({ banned: false });
@@ -73,9 +75,11 @@ export const handleCheckIPLimit: RequestHandler = async (req, res) => {
       return;
     }
 
-    const ipsRef = collection(adminDB, "user_ips");
-    const q = query(ipsRef, where("ipAddress", "==", ipAddress));
-    const snapshot = await getDocs(q);
+    const db = getAdminDb();
+    const snapshot = await db
+      .collection("user_ips")
+      .where("ipAddress", "==", ipAddress)
+      .get();
 
     const accountCount = snapshot.size;
     const isLimitExceeded = accountCount >= maxAccounts;
@@ -100,10 +104,10 @@ export const handleRecordUserIP: RequestHandler = async (req, res) => {
       return;
     }
 
-    const ipDocRef = adminDB.collection("user_ips").doc();
+    const db = getAdminDb();
     const now = Timestamp.now();
 
-    await ipDocRef.set({
+    const docRef = await db.collection("user_ips").add({
       userId,
       email: email || "",
       ipAddress,
@@ -111,7 +115,7 @@ export const handleRecordUserIP: RequestHandler = async (req, res) => {
       lastUsed: now,
     });
 
-    res.json({ success: true, ipId: ipDocRef.id });
+    res.json({ success: true, ipId: docRef.id });
   } catch (error) {
     console.error("Error recording user IP:", error);
     res.status(500).json({ error: "Failed to record IP" });
@@ -127,9 +131,11 @@ export const handleUpdateUserIPLogin: RequestHandler = async (req, res) => {
       return;
     }
 
-    const ipsRef = collection(adminDB, "user_ips");
-    const q = query(ipsRef, where("userId", "==", userId));
-    const snapshot = await getDocs(q);
+    const db = getAdminDb();
+    const snapshot = await db
+      .collection("user_ips")
+      .where("userId", "==", userId)
+      .get();
 
     let found = false;
     for (const doc of snapshot.docs) {
@@ -145,7 +151,7 @@ export const handleUpdateUserIPLogin: RequestHandler = async (req, res) => {
 
     if (!found) {
       // Record new IP
-      await adminDB.collection("user_ips").doc().set({
+      await db.collection("user_ips").add({
         userId,
         ipAddress,
         recordedAt: Timestamp.now(),
