@@ -252,8 +252,15 @@ function parseMarkdownElements(text: string, isDark: boolean): ReactNode[] {
     // Regular paragraphs
     if (trimmed) {
       elements.push(
-        <p key={`p-${i}`} className="mb-3 leading-[1.55] text-white/90">
-          {parseInlineMarkdown(trimmed)}
+        <p
+          key={`p-${i}`}
+          className={`mb-3 leading-[1.55] transition-all duration-300 ${
+            isDark
+              ? "text-white/90"
+              : "text-[#1A1A1A]/90"
+          }`}
+        >
+          {parseInlineMarkdown(trimmed, isDark)}
         </p>,
       );
     }
