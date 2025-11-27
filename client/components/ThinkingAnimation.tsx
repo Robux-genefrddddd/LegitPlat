@@ -1,11 +1,12 @@
 export function ThinkingAnimation() {
   return (
     <div
-      className="rounded-2xl rounded-tl-none px-4 py-3 flex items-center gap-2"
+      className="rounded-lg rounded-tl-none py-2 px-3 flex items-center gap-2 h-auto"
       style={{
         backgroundColor: "#111418",
         border: "1px solid rgba(255, 255, 255, 0.08)",
         boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
+        lineHeight: "1.3",
       }}
     >
       <div className="flex gap-1.5 items-center">
@@ -22,7 +23,7 @@ export function ThinkingAnimation() {
           style={{ animationDelay: "0.4s" }}
         />
       </div>
-      <span className="text-sm font-medium text-white/70 ml-1">
+      <span className="text-sm font-medium text-white/70" style={{ margin: 0 }}>
         L'IA réfléchit...
       </span>
     </div>
