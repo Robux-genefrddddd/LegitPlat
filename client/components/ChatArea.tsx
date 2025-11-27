@@ -2,6 +2,7 @@ import { Send, Smile, Loader2 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { MessagesService, Message } from "@/lib/messages";
+import { getStorage, ref, getBytes } from "firebase/storage";
 import { AIService } from "@/lib/ai";
 import {
   validateMessageContent,
@@ -330,7 +331,13 @@ export function ChatArea({ conversationId }: ChatAreaProps) {
                 {msg.role === "user" ? (
                   <div className="flex gap-2 sm:gap-3 max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl items-start flex-row-reverse">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-md border border-blue-400/50 ring-2 ring-blue-400/20 overflow-hidden">
-                      {user?.photoURL ? (
+                      {userData?.profilePhotoURL ? (
+                        <img
+                          src={userData.profilePhotoURL}
+                          alt={user?.displayName || "User"}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : user?.photoURL ? (
                         <img
                           src={user.photoURL}
                           alt={user.displayName || "User"}
