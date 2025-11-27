@@ -306,7 +306,11 @@ export function Sidebar({
                         setIsSettingsOpen(true);
                         setIsMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-lg text-xs text-foreground/70 hover:text-foreground hover:bg-white/[0.08] transition-colors hover:-translate-y-0.5"
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all hover:-translate-y-0.5 ${
+                        isDark
+                          ? "text-foreground/70 hover:text-foreground hover:bg-white/[0.08]"
+                          : "text-[#3F3F3F]/70 hover:text-[#1A1A1A] hover:bg-black/[0.08]"
+                      }`}
                     >
                       Paramètres
                     </button>
@@ -315,19 +319,33 @@ export function Sidebar({
                         setIsHelpOpen(true);
                         setIsMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-lg text-xs text-foreground/70 hover:text-foreground hover:bg-white/[0.08] transition-colors hover:-translate-y-0.5"
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all hover:-translate-y-0.5 ${
+                        isDark
+                          ? "text-foreground/70 hover:text-foreground hover:bg-white/[0.08]"
+                          : "text-[#3F3F3F]/70 hover:text-[#1A1A1A] hover:bg-black/[0.08]"
+                      }`}
                     >
                       Aide
                     </button>
                     {userData?.isAdmin && (
                       <>
-                        <div className="h-px bg-white/[0.08] my-0.5" />
+                        <div
+                          className={`h-px my-0.5 transition-colors duration-300 ${
+                            isDark
+                              ? "bg-white/[0.08]"
+                              : "bg-black/[0.08]"
+                          }`}
+                        />
                         <button
                           onClick={() => {
                             navigate("/admin");
                             setIsMenuOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 rounded-lg text-xs text-primary font-medium hover:bg-white/[0.08] transition-colors hover:-translate-y-0.5"
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all hover:-translate-y-0.5 text-primary ${
+                            isDark
+                              ? "hover:bg-white/[0.08]"
+                              : "hover:bg-black/[0.08]"
+                          }`}
                         >
                           Admin
                         </button>
